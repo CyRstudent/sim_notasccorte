@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Notas de Corte (Adecuado a Andalucía)</title>
+    <style>
+        @font-face {
+            font-family: comic-sans;
+            src: url('./util/IHATCS__.TTF');
+        }
+        body {
+            font-family: comic-sans;
+            background-color: #7785cc;
+            padding: 20px;
+        }
+        .input-field {
+            width: 350px;
+            margin-left: 10px;
+            height: 20px;
+            padding: 3px;
+            border: 3px solid #333;
+            border-radius: 10px;
+        }
+        .result {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulador de Nota de Acceso para universidades Andaluzas</h1>
+    <h2>Medias de bachillerato</h2>
+    <form>
+        <label for="bach1">Notas de primero de bachillerato </label>
+        <input type="text" class="input-field" id="bach1not" placeholder="Introduce tus notas de Bachillerato (nota1, nota2, nota3...)">
+        <br><br>
+        <label for="bach2">Notas de segundo de bachillerato </label>
+        <input type="text" class="input-field" id="bach2not" placeholder="Introduce tus notas de Bachillerato (nota1, nota2, nota3...)">
+    </form>
+
+    <h3>Notas de primero de bachillerato:</h3>
+    <div id="notas-list-bach1" class="result"></div>
+
+    <h3>Notas de segundo de bachillerato:</h3>
+    <div id="notas-list-bach2" class="result"></div>
+
+    <script>
+        // Arrays para almacenar las notas de primero y segundo de bachillerato
+        let notasBach1 = [];
+        let notasBach2 = [];
+
+        // Evento para capturar cuando el usuario presiona una tecla en el campo de primero de bachillerato
+        document.getElementById('bach1not').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                agregarNota('bach1not', notasBach1, 'notas-list-bach1');
+            }
+        });
+
+        // Evento para capturar cuando el usuario presiona una tecla en el campo de segundo de bachillerato
+        document.getElementById('bach2not').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                agregarNota('bach2not', notasBach2, 'notas-list-bach2');
+            }
+        });
+
+        // Función para agregar la nota al array correspondiente y mostrarla en HTML
+        function agregarNota(inputId, notasArray, resultId) {
+            // Obtener el valor del campo de entrada
+            const nota = document.getElementById(inputId).value;
+
+            // Comprobar que el campo no esté vacío
+            if (nota.trim() !== "") {
+                // Agregar la nota al array
+                notasArray.push(nota);
+
+                // Limpiar el campo de entrada
+                document.getElementById(inputId).value = '';
+
+                // Mostrar el array de notas en el contenedor HTML correspondiente
+                mostrarNotas(notasArray, resultId);
+            } else {
+                alert("Por favor, introduce una nota válida.");
+            }
+        }
+
+        // Función para mostrar las notas almacenadas en el contenedor HTML
+        function mostrarNotas(notasArray, resultId) {
+            const resultContainer = document.getElementById(resultId);
+            // Convertir el array de notas a una lista HTML
+            resultContainer.innerHTML = notasArray.map(nota => `<p>${nota}</p>`).join('');
+        }
+    </script>
+</body>
+</html>
